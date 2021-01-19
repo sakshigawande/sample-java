@@ -103,7 +103,7 @@
 			<sonar.sources>.</sonar.sources>
 			<sonar.inclusions>src/main/java/**,src/main/resources/**</sonar.inclusions>
 			<sonar.exclusions>${code.coverage.exclusions}</sonar.exclusions>
-			<sonar.projectKey>sample-java</sonar.projectKey>
+			<sonar.projectKey>adityatide_sample-java</sonar.projectKey>
 			<sonar.organization>adityatide</sonar.organization>
 			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		</properties>
