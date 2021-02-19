@@ -26,6 +26,7 @@ jobs:
       
   Test:
     name: Test - Units & Integrations
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-18.04
     needs: [Build]
     steps:
@@ -41,6 +42,7 @@ jobs:
 
   Sonar:
     name: Test - SonarCloud Scan
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-18.04
     needs: [Build]
     steps:
