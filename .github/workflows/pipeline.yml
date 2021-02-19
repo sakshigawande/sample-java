@@ -54,18 +54,35 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  docker:
-    name: Publish - Docker Hub
-    runs-on: ubuntu-18.04
-    needs: [test, sonar]
-    env:
-      REPO: ${{ secrets.DOCKER_REPO }}
-
+  DeployWIP:
+    name: Deploy to WIP 
+    needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: WIP
+      #url: 'http://www.myapp.com'
     steps:
-      - uses: actions/checkout@v1
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-      - name: Build Docker image
-        run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
-      - name: Publish Docker image
-        run: docker push $REPO
+      - name: Deploy
+        run: echo I am deploying!
+  
+  DeployStaging:
+    name: Deploy to STAGING 
+    needs: [DeployWIP]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Staging
+      #url: 'http://www.myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying to staging!
+  
+  DeployProduction:
+    name: Deploy to Production 
+    needs: [DeployStaging]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Production
+      #url: 'http://www.myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying to Production!
