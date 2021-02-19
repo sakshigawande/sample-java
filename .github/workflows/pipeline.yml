@@ -11,7 +11,7 @@ on:
 
 jobs:
 
-  build:
+  Build:
     name: Build
     runs-on: ubuntu-18.04
 
@@ -24,10 +24,10 @@ jobs:
       - name: Maven Package
         run: mvn package 
       
-  test:
+  Test:
     name: Test - Units & Integrations
     runs-on: ubuntu-18.04
-    needs: [build]
+    needs: [Build]
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
@@ -39,10 +39,10 @@ jobs:
       - name: Maven Verify
         run: mvn -B clean verify -Pintegration-test
 
-  sonar:
+  Sonar:
     name: Test - SonarCloud Scan
     runs-on: ubuntu-18.04
-    needs: [build]
+    needs: [Build]
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
@@ -54,18 +54,37 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  docker:
-    name: Publish - Docker Hub
-    runs-on: ubuntu-18.04
-    needs: [test, sonar]
-    env:
-      REPO: ${{ secrets.DOCKER_REPO }}
-
+  DeployWIP:
+    name: Deploy to WIP 
+    if: github.event_name == 'pull_request'
+    needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: WIP
+      #url: 'http://www.myapp.com'
     steps:
-      - uses: actions/checkout@v1
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-      - name: Build Docker image
-        run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
-      - name: Publish Docker image
-        run: docker push $REPO
+      - name: Deploy
+        run: echo I am deploying!
+  
+  DeployStaging:
+    name: Deploy to STAGING 
+    if: github.event.ref == 'refs/heads/main'
+    needs: [DeployWIP , Sonar , Test]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Staging
+      #url: 'http://www.myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying to staging!
+  
+  DeployProduction:
+    name: Deploy to Production 
+    needs: [DeployStaging]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Production
+      #url: 'http://www.myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying to Production!
