@@ -5,9 +5,9 @@ name: Java app CI with maven
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
 
@@ -68,7 +68,7 @@ jobs:
   
   DeployStaging:
     name: Deploy to STAGING 
-    if: github.event.ref == 'refs/heads/main'
+    if: github.event.ref == 'refs/heads/master'
     needs: [Build]
     runs-on: ubuntu-latest
     environment: 
