@@ -66,7 +66,7 @@ jobs:
       #url: 'http://www.myapp.com'
     steps:
       - name: Deploy
-        run: echo I am deploying!
+        run: echo I am deploying to WIP!!!
   
   DeployStaging:
     name: Deploy to STAGING 
@@ -78,7 +78,7 @@ jobs:
       #url: 'http://www.myapp.com'
     steps:
       - name: Deploy
-        run: echo I am deploying to staging!
+        run: echo I am deploying to staging!!!
   
   DeployProduction:
     name: Deploy to Production 
@@ -89,4 +89,4 @@ jobs:
       #url: 'http://www.myapp.com'
     steps:
       - name: Deploy
-        run: echo I am deploying to Production!
+        run: echo I am deploying to Production!!!
