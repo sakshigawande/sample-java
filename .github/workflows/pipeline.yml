@@ -67,7 +67,7 @@ jobs:
   
   DeployStaging:
     name: Deploy to STAGING 
-    needs: [DeployWIP]
+    needs: [DeployWIP , sonar , test]
     runs-on: ubuntu-latest
     environment: 
       name: Staging
