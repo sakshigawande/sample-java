@@ -59,7 +59,7 @@ jobs:
   DeployWIP:
     name: Deploy to WIP 
     if: github.event_name == 'pull_request'
-    needs: [Build]
+    needs: [Build, Sonar,Test]
     runs-on: ubuntu-latest
     environment: 
       name: WIP
