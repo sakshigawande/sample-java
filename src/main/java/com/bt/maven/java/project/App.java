@@ -13,6 +13,6 @@ public class App
     }
     public void main1(  )
     {
-        System.out.println("Hello Aditya!");
+        System.out.println("Hello Aditya! Condition checks.");
     }
 }
